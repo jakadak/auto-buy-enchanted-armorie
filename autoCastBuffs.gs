@@ -1,5 +1,6 @@
 /**
- * Auto Cast Buffs v1.0.10 by @bumbleshoot
+ * Jakadak Auto Buy Enchanted armorie edit
+ * Oroginal Auto Cast Buffs v1.0.10 by @bumbleshoot
  * 
  * See GitHub page for info & setup instructions:
  * https://github.com/bumbleshoot/auto-cast-buffs
@@ -7,7 +8,7 @@
 
  const USER_ID = "";
  const API_TOKEN = "";
- const RESERVE_MANA = 0;
+ const RESERVE_GOLD = 0;
  const API_CALLS_LEFT = 15;
  
 /*************************************\
@@ -89,8 +90,8 @@ function validateConstants() {
     }
   }
 
-  if (typeof RESERVE_MANA !== "number" || RESERVE_MANA < 0) {
-    console.log("ERROR: RESERVE_MANA must be a positive number.\n\neg. const RESERVE_MANA = 0;\n    const RESERVE_MANA = 22.5;");
+  if (typeof RESERVE_GOLD !== "number" || RESERVE_GOLD < 0) {
+    console.log("ERROR: RESERVE_GOLD must be a positive number.\n\neg. const RESERVE_GOLD = 0;\n    const RESERVE_GOLD = 22.5;");
     valid = false;
   }
 
@@ -163,18 +164,10 @@ function fetch(url, params) {
   }
 }
 
-/**
- * castBuffs()
- * 
- * If user level > 13, casts the user's class buff 
- * until mana reaches RESERVE_MANA.
- * 
- * Run this function every 15 mins.
- */
 function castBuffs() {
   try {
 
-    let numCasts = Math.floor((user.stats.gp - RESERVE_MANA) / 100);
+    let numCasts = Math.floor((user.stats.gp - RESERVE_GOLD) / 100);
 
     console.log("Buying Enchanted Armorie " + numCasts + " time(s)");
 
