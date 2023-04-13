@@ -19,7 +19,7 @@ const PARAMS = {
   "headers": {
     "x-api-user": USER_ID, 
     "x-api-key": API_TOKEN,
-    "x-client": "35c3fb6f-fb98-4bc3-b57a-ac01137d0847-AutoCastBuffs"
+    "x-client": "35c3fb6f-fb98-4bc3-b57a-ac01137d0847-Autobuyenchantedarmorie"
   },
   "muteHttpExceptions": true
 };
@@ -39,7 +39,7 @@ function install() {
     // create trigger
     console.log("Creating trigger...")
 
-    ScriptApp.newTrigger("castBuffs")
+    ScriptApp.newTrigger("buyenchantedarmorie")
       .timeBased()
       .everyMinutes(15)
       .create();
@@ -164,14 +164,15 @@ function fetch(url, params) {
   }
 }
 
-function castBuffs() {
+function buyenchantedarmorie() {
   try {
 
-    let numCasts = Math.floor((user.stats.gp - RESERVE_GOLD) / 100);
+    let user = JSON.parse(fetch("https://habitica.com/api/v3/user", GET_PARAMS)).data;
 
-    console.log("Buying Enchanted Armorie " + numCasts + " time(s)");
+    let numBuy = Math.floor((user.stats.gp - RESERVE_GOLD) / 100);
+    console.log("Buying Enchanted Armorie " + numBuy + " time(s)");
 
-    for (let i=0; i<numCasts; i++) {
+    for (let i=0; i<numBuy; i++) {
       fetch("https://habitica.com/api/v3/user/buy-armoire", POST_PARAMS);
     }
 
