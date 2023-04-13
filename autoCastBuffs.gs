@@ -8,6 +8,7 @@
  const USER_ID = "";
  const API_TOKEN = "";
  const RESERVE_MANA = 0;
+ const API_CALLS_LEFT = 15;
  
 /*************************************\
  *  DO NOT EDIT ANYTHING BELOW HERE  *
@@ -117,7 +118,7 @@ function fetch(url, params) {
   for (let i=0; i<3; i++) {
 
     // if rate limit reached
-    if (rateLimitRemaining != null && Number(rateLimitRemaining) < 1) {
+    if (rateLimitRemaining != null && Number(rateLimitRemaining) < (API_CALLS_LEFT + 1)) {
 
       // wait until rate limit reset
       let waitUntil = new Date(rateLimitReset);
@@ -173,38 +174,12 @@ function fetch(url, params) {
 function castBuffs() {
   try {
 
-    if (getUser().stats.lvl < 13) {
-      console.log("User level " + user.stats.lvl + ", cannot cast buffs");
-      return;
-    }
+    let numCasts = Math.floor((user.stats.gp - RESERVE_MANA) / 100);
 
-    let skillName;
-    let spellId;
-    let manaCost;
-    if (user.stats.class == "wizard") {
-      skillName = "Earthquake";
-      spellId = "earth";
-      manaCost = 35;
-    } else if (user.stats.class == "rogue") {
-      skillName = "Tools of the Trade";
-      spellId = "toolsOfTrade";
-      manaCost = 25;
-    } else if (user.stats.class == "healer") {
-      skillName = "Protective Aura";
-      spellId = "protectAura";
-      manaCost = 30;
-    } else {
-      skillName = "Valorous Presence"
-      spellId = "valorousPresence";
-      manaCost = 20;
-    }
-
-    let numCasts = Math.floor((user.stats.mp - RESERVE_MANA) / manaCost);
-
-    console.log("Casting " + skillName + " " + numCasts + " time(s)");
+    console.log("Buying Enchanted Armorie " + numCasts + " time(s)");
 
     for (let i=0; i<numCasts; i++) {
-      fetch("https://habitica.com/api/v3/user/class/cast/" + spellId, POST_PARAMS);
+      fetch("https://habitica.com/api/v3/user/buy-armoire", POST_PARAMS);
     }
 
   } catch (e) {
