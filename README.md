@@ -1,4 +1,4 @@
-## Auto-cast buffs script (Jakadak edit)
+## Auto Buy Enchanted Armorie
 
 Do you want to use habitica auto buy enchanted armorie, but have free API slots at all times?
 Here is something for you <3
